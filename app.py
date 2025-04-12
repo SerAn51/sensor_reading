@@ -1,16 +1,17 @@
 from flask import Flask, request, jsonify
 import psycopg2
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 
 # Connessione al database Railway
 conn = psycopg2.connect(
-    host="centerbeam.proxy.rlwy.net",
-    database="railway",
-    user="railway",
-    password="1r3ad48055h0p9mpg51aw4r6dv3cqm8m",
-    port=28234
+    host=os.getenv('DB_HOST'),
+    database=os.getenv('DB_NAME'),
+    user=os.getenv('DB_USER'),
+    password=os.getenv('DB_PASS'),
+    port=os.getenv('DB_PORT')
 )
 cursor = conn.cursor()
 

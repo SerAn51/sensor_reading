@@ -28,7 +28,7 @@ def insert_data():
 
     try:
         cursor.execute(
-            "INSERT INTO sensor_readings (timestamp, humidity, temperature) VALUES (%s, %s, %s)",
+            "INSERT INTO sensor_readings (time, humidity, temperature) VALUES (%s, %s, %s)",
             (timestamp, humidity, temperature)
         )
         conn.commit()

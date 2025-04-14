@@ -25,6 +25,18 @@ def insert_data():
     # Se non c'è timestamp dal client, usa quello del server (non dovrebbe succedere mai)
     if not timestamp:
         timestamp = datetime.utcnow().isoformat()
+    else:
+        # Verifica se il timestamp è un intero (Unix timestamp)
+        try:
+            # Se è una stringa, prova a convertirla in intero
+            if isinstance(timestamp, str):
+                timestamp = int(timestamp)
+            
+            # Se è un timestamp Unix (numero di secondi), convertilo in formato ISO 8601
+            if isinstance(timestamp, int) or isinstance(timestamp, float):
+                timestamp = datetime.utcfromtimestamp(timestamp).isoformat()
+        except (ValueError, TypeError):
+            return jsonify({"error": "Timestamp non valido"}), 400
 
     try:
         cursor.execute(

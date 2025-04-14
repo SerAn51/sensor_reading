@@ -18,8 +18,13 @@ cursor = conn.cursor()
 @app.route('/insert', methods=['POST'])
 def insert_data():
     data = request.get_json()
-    temperature = data.get('temperature')
-    humidity = data.get('humidity')
+    # Ottieni i dati e convertili in double (float in Python)
+    try:
+        temperature = float(data.get('temperature'))  # Converte in float (double)
+        humidity = float(data.get('humidity'))  # Converte in float (double)
+    except (TypeError, ValueError):
+        return jsonify({"error": "Valori di temperatura o umidità non validi"}), 400
+
     timestamp = data.get('timestamp')
 
     # Se non c'è timestamp dal client, usa quello del server (non dovrebbe succedere mai)

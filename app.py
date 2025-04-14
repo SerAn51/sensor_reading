@@ -26,16 +26,25 @@ def insert_data():
     if not timestamp:
         timestamp = datetime.utcnow().isoformat()
 
-    try:
-        cursor.execute(
-            "INSERT INTO sensor_readings (timestamp, humidity, temperature) VALUES (%s, %s, %s)",
-            (timestamp, humidity, temperature)
-        )
-        conn.commit()
-        return jsonify({"message": "Dati inseriti con successo"}), 200
-    except Exception as e:
-        conn.rollback()
-        return jsonify({"error": str(e)}), 500
+    #try:
+    #    cursor.execute(
+    #        "INSERT INTO sensor_readings (timestamp, humidity, temperature) VALUES (%s, %s, %s)",
+    #        (timestamp, humidity, temperature)
+    #    )
+    #    conn.commit()
+    #    return jsonify({"message": "Dati inseriti con successo"}), 200
+    #except Exception as e:
+    #    conn.rollback()
+    #    return jsonify({"error": str(e)}), 500
+
+# Visualizza i dati ricevuti direttamente nella risposta HTML
+    html = f"""
+        <h1>Dati ricevuti</h1>
+        <p><strong>Temperatura:</strong> {temperature}°C</p>
+        <p><strong>Umidità:</strong> {humidity}%</p>
+        <p><strong>Timestamp:</strong> {timestamp}</p>
+    """
+    return html
 
 @app.route('/')
 def home():

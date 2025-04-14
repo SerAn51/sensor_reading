@@ -27,6 +27,7 @@ def insert_data():
         timestamp = datetime.utcnow().isoformat()
 
     try:
+        timestamp = datetime.utcfromtimestamp(timestamp).isoformat()
         cursor.execute(
             "INSERT INTO sensor_readings (time, humidity, temperature) VALUES (%s, %s, %s)",
             (timestamp, humidity, temperature)
